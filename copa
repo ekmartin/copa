@@ -1,9 +1,23 @@
 #!/bin/bash
+#
+# Separate copy/cut/paste commands, sort of like a GUI file browser.
+# Author: Martin Ek (2014)
+#######################################
 
 readonly PROGNAME="copa"
 readonly PROGDIR="$PWD"
 readonly TEMPDIR="/tmp/copa"
 
+#######################################
+# Copies a list of files/folders to a
+# temp folder so it can be pasted later
+# Globals:
+#   None
+# Arguments:
+#   A list of files/folders
+# Returns:
+#   None
+#######################################
 copy() {
 	if [[ ! -d $TEMPDIR ]]; then
 		mkdir $TEMPDIR
@@ -19,6 +33,17 @@ copy() {
 	done
 }
 
+#######################################
+# Cuts a list of files/folders to a
+# temp folder so it can be pasted later
+# Globals:
+#   TEMPDIR
+#		PROGDIR
+# Arguments:
+#   A list of files/folders
+# Returns:
+#   None
+#######################################
 cut() {
 	if [[ ! -d $TEMPDIR ]]; then
 		mkdir $TEMPDIR
@@ -34,6 +59,17 @@ cut() {
 	done
 }
 
+#######################################
+# Pastes everything in the temp folder
+# to a chosen directory or the current
+# one.
+# Globals:
+#   TEMPDIR
+# Arguments:
+#   The folder you want to paste to
+# Returns:
+#   None
+#######################################
 paste() {
 	local pastedir="$PWD"
 	if [[ ! -z "$1" ]]; then
