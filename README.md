@@ -14,8 +14,13 @@ copa paste
 
 ## Options:
 ```sh
-copy -c           Copies a list of files/folders, making them available for pasting later on.
-cut -cu           Does the same as copy, but deletes the original files/folders in the progress.
-paste -p          Pastes the marked files/folders from earlier to your current folder.
-help -h           Displays this information.
+$ copy -c           Copies a list of files/folders, making them available for pasting later on.
+$ cut -cu           Does the same as copy, but deletes the original files/folders in the progress.
+$ paste -p          Pastes the marked files/folders from earlier to your current folder.
+$ help -h           Displays this information.
+```
+
+## Installation:
+```sh
+$ make install
 ```
