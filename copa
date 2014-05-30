@@ -1,0 +1,100 @@
+#!/bin/bash
+
+readonly PROGNAME="copa"
+readonly PROGDIR="$PWD"
+readonly TEMPDIR="/tmp/copa"
+
+copy() {
+	if [[ ! -d $TEMPDIR ]]; then
+		mkdir $TEMPDIR
+	fi
+	rm -rf $TEMPDIR/*
+
+	local files="$@"
+
+	for file in $files; do
+		if [[ -e $PROGDIR/$file ]]; then
+			cp -R $PROGDIR/$file $TEMPDIR/$file
+		fi
+	done
+}
+
+cut() {
+	if [[ ! -d $TEMPDIR ]]; then
+		mkdir $TEMPDIR
+	fi
+	rm -rf $TEMPDIR/*
+
+	local files="$@"
+
+	for file in $files; do
+		if [[ -e $PROGDIR/$file ]]; then
+			mv $PROGDIR/$file $TEMPDIR/$file
+		fi
+	done
+}
+
+paste() {
+	local pastedir="$PWD"
+	if [[ ! -z "$1" ]]; then
+		pastedir="$1"
+	fi
+
+	shopt -s nullglob dotglob
+  local files=($TEMPDIR/*)
+  if [[	${#files[@]} != 0 ]]; then
+  	local pastefiles=$TEMPDIR/*
+  	for file in $pastefiles; do
+  		cp -R $file $pastedir
+  	done
+  fi
+}
+
+usage() {
+cat << EOF
+Usage: $PROGNAME options
+
+Separate copy and paste commands, sort of like a GUI file browser.
+
+OPTIONS:
+	copy -c           Copies a list of files/folders, making them available for pasting later on.
+	cut -cu           Does the same as copy, but deletes the original files/folders in the progress.
+	paste -p          Pastes the marked files/folders from earlier to your current folder.
+	help -h           Displays this information.
+
+EXAMPLES:
+	Mark a list of files/folders for copying:
+	$PROGNAME copy file1 file2 file3 folder
+
+	Cut a list of files/folders:
+	$PROGNAME cut file1 file2 file3 folder
+
+	Paste the marked files/folders to your current folder:
+	$PROGNAME paste
+EOF
+}
+
+case "$1" in
+	copy)
+		shift; copy $@
+		;;
+	-c)
+		shift; copy $@
+		;;
+	cut)
+		shift; cut $@
+		;;
+	-cu)
+		shift; cut $@
+		;;
+	paste)
+		shift; paste $@
+		;;
+	-p)
+		shift; paste $@
+		;;
+	*)
+		usage
+		exit 1
+		;;
+esac
