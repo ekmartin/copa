@@ -5,11 +5,11 @@ Separate copy and paste commands, sort of like a GUI file browser. Moves the fil
 ## Examples:
 ```sh
 # Mark a list of files/folders for copying:
-copa copy file1 file2 file3 folder
+$ copa copy file1 file2 file3 folder
 # Cut a list of files/folders:
-copa cut file1 file2 file3 folder
+$ copa cut file1 file2 file3 folder
 # Paste the marked files/folders to your current folder:
-copa paste   
+$ copa paste   
 ```
 
 ## Options:
